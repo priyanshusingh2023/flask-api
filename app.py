@@ -3,7 +3,6 @@ import requests
 import json
 import os
 from flask_cors import CORS
-import aspose.words as aw
 from Markdown2docx import Markdown2docx
 
 
@@ -88,8 +87,8 @@ def download_docx():
     file_path = working_dir+"/RolePlay.md"
 
     create_md_file(markdown_content, file_path)
-    output = aw.Document()
-    output.remove_all_children()
+    # output = aw.Document()
+    # output.remove_all_children()
     project = Markdown2docx(working_dir+"/RolePlay")
     project.eat_soup()
     project.save()
