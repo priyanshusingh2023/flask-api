@@ -1,0 +1,5 @@
+Flask
+requests
+aspose-words
+Markdown2docx
+Flask-Cors
