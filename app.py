@@ -5,7 +5,11 @@ import os
 from flask_cors import CORS
 from Markdown2docx import Markdown2docx
 
+import logging
 
+# Configure the logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s',
+                    datefmt='%Y-%m-%d %H:%M:%S')
 
 app = Flask(__name__)
 CORS(app)
@@ -24,6 +28,7 @@ class RolePlayCreator:
 
     @staticmethod
     def construct_prompt(data):
+        logging.info(f"Create a role play with data: {data}")
         prompt_parts = [
             "Generate a role-play exercise with the following specifications:\n",
             f"**Industry:** {data['industry']}\n",
@@ -78,6 +83,7 @@ def rolePlayCreator():
         return jsonify(rolePlayExercie)
 
     except Exception as e:
+        logging.error(f"Exception while generating a role play: {str(e)}")
         print("Service Exception:", str(e))
         raise Exception("Error in getting response from Gemini API")
 
@@ -92,6 +98,7 @@ def download_docx():
     project = Markdown2docx(working_dir+"/RolePlay")
     project.eat_soup()
     project.save()
+    logging.info(f"Downloading a docx file of a blog")
     return send_file("RolePlay.docx", as_attachment=True, download_name="role-play.docx", mimetype='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
 
 
